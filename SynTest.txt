@@ -1,0 +1,9 @@
+iteration: 75000
+Frame_Num: 600, Average_psnr: 29.5789, Average_psnr_final: 0.0000, Average_ssim: 0.9627, Average_ssim_final: 0.0000, Average_lpips: 0.0848, Average_lpips_final: 0.0000
+
+iteration: 75000
+Frame_Num: 60, Average_psnr: 30.1904, Average_psnr_final: 0.0000, Average_ssim: 0.9663, Average_ssim_final: 0.0000, Average_lpips: 0.0772, Average_lpips_final: 0.0000
+
+iteration: 75000
+Frame_Num: 600, Average_psnr: 29.5789, Average_psnr_final: 0.0000, Average_ssim: 0.9627, Average_ssim_final: 0.0000, Average_lpips: 0.0848, Average_lpips_final: 0.0000
+
