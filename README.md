@@ -19,7 +19,8 @@ $ bash train.sh
 ```
 You can also use the command ```tensorboard logdir=runs``` to visually check the training results.
 ## Testing
-Download the [pretrained model](https://drive.google.com/drive/folders/1c3JYdv64U-OmOyksNK6n51sNwBgy-iQC?usp=sharing), and put it in ```checkpoints_waterdrop/```.
+- Download the [pretrained model](https://drive.google.com/drive/folders/1c3JYdv64U-OmOyksNK6n51sNwBgy-iQC?usp=sharing), and put it in ```checkpoints_waterdrop/```.
+- Download the [test dataset](), and unzip it in ```dataset/```.
 To test:
 ```
 $ bash test.sh
