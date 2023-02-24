@@ -1,8 +1,8 @@
 # [ICRA2023] Video Waterdrop Removal via Spatio-Temporal Fusion in Driving Scenes
 Project | [Paper](https://arxiv.org/pdf/2302.05916.pdf)
 <p align='center'>
-<img src='visualization/8.gif' width=280>
-<img src='visualization/8.gif' width=280>
+<img src='visualization/8.gif' width=300>
+<img src='visualization/8.gif' width=300>
 </p>
 
 
