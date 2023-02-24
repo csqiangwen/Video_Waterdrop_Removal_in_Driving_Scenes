@@ -8,7 +8,7 @@ class TrainOptions(BaseOptions):
         self.parser.add_argument('--phase', type=str, default='train', help='train, val, test, etc')
         self.parser.add_argument('--batchSize', type=int, default=8, help='input batch size')
         self.parser.add_argument('--loadsize', type=int, default=256, help='input batch size')
-        self.parser.add_argument('--vid_dataroot', type=str, default='/disk1/wenqiang/Documents/data/Waterdrop/')
+        self.parser.add_argument('--vid_dataroot', type=str, default='./dataset/Waterdrop/')
         self.parser.add_argument('--n_frames', type=int, default=5, help='the number of input frames')
         self.parser.add_argument('--shuffle', action='store_true', help='dataloader option')
 
