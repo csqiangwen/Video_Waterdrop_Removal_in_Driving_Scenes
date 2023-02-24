@@ -13,4 +13,4 @@ conda env create -f environment.yaml
 An environment named "th" will be created.
 
 ## Training
-Download the training set, and put it under ```./dataset/```
+Download the training set, and put it in ```dataset/```
