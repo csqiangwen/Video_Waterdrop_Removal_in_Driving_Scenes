@@ -8,7 +8,7 @@ class TrainOptions(BaseOptions):
         self.parser.add_argument('--phase', type=str, default='train', help='train, val, test, etc')
         self.parser.add_argument('--batchSize', type=int, default=8, help='input batch size')
         self.parser.add_argument('--loadsize', type=int, default=256, help='input batch size')
-        self.parser.add_argument('--vid_dataroot', type=str, default='/disk1/wenqiang/Documents/data/RainDrop/')
+        self.parser.add_argument('--vid_dataroot', type=str, default='/disk1/wenqiang/Documents/data/Waterdrop/')
         self.parser.add_argument('--n_frames', type=int, default=5, help='the number of input frames')
         self.parser.add_argument('--shuffle', action='store_true', help='dataloader option')
 
@@ -16,7 +16,7 @@ class TrainOptions(BaseOptions):
         self.parser.add_argument('--gpu_ids', type=str, default='2', help='gpu ids: e.g. 0  0,1,2, 0,2. use -1 for CPU')
         self.parser.add_argument('--print_freq', type=int, default=100, help='frequency of showing training results on console')
         self.parser.add_argument('--save_freq', type=int, default=1000, help='frequency of saving checkpoints at the end of epochs')
-        self.parser.add_argument('--checkpoints_dir', type=str, default='./checkpoints_raindrop', help='models are saved here')
+        self.parser.add_argument('--checkpoints_dir', type=str, default='./checkpoints_waterdrop', help='models are saved here')
         self.parser.add_argument('--name', type=str, default='radindrop', help='name of the experiment. It decides where to store samples and models')
         self.parser.add_argument('--continue_train', action='store_true', help='continue training: load the latest model')
         self.parser.add_argument('--which_iter', type=str, default=0, help='which epoch to load? set to latest to use latest cached model')

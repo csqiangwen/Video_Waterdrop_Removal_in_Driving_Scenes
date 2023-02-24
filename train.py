@@ -1,7 +1,7 @@
 import time
 from options.train_options import TrainOptions
 from data.custom_dataset_data_loader import CreateDataLoader
-from model.custom_model import RainDrop
+from model.custom_model import WaterDrop
 from model.eval_tools import eval_PSNR
 from util import util
 import os
@@ -20,7 +20,7 @@ torch.backends.cudnn.deterministic = True
 opt = TrainOptions().parse()
 vid_train_loader, img_train_loader = CreateDataLoader(opt)
 
-model = RainDrop()
+model = WaterDrop()
 model.initialize(opt)
 total_steps = int(1e10)
 

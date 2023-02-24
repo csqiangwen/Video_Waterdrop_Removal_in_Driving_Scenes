@@ -4,7 +4,7 @@ from torch.autograd import Variable
 from torch.nn import init
 import functools
 from torch.optim import lr_scheduler
-from model.util import TransformerBlock
+from model.util import AttentionBlock
 import torch.nn.utils.spectral_norm as _spectral_norm
 import numpy as np
 ###############################################################################
@@ -295,11 +295,11 @@ class Upsample_block_normal(BaseNetwork):
     
 ### Transformer EmbedNet
 class Generator(BaseNetwork):
-    def __init__(self, in_channel=3, out_channel=3, ngf=64, n_downsampling=2, single_block_num=1, multi_block_num=4):
+    def __init__(self, in_channel=3, out_channel=3, ngf=64, n_downsampling=2, spatial_block_num=1, temporal_block_num=4):
         super(Generator, self).__init__()
 
-        single_patchsize = [(2,2)]
-        multi_patchsize = [(8,8), (4,4)]
+        spatial_attn_patchsize = [(2,2)]
+        temporal_attn_patchsize = [(8,8), (4,4)]
                 
         main_branch = [nn.ReflectionPad2d(3),
                        nn.Conv2d(in_channel, ngf, kernel_size=7, padding=0, bias=True),
@@ -320,13 +320,13 @@ class Generator(BaseNetwork):
         weight_branch = [Weight_block_normal(ngf * mult * 2, ngf * mult * 2, need_relu=True),
                          Weight_block_normal(ngf * mult * 2, ngf * mult * 2, need_relu=False)]
 
-        single_blocks = []
-        for _ in range(single_block_num):
-            single_blocks.append(TransformerBlock(single_patchsize, hidden=ngf * mult * 2))
+        spatial_attn_blocks = []
+        for _ in range(spatial_block_num):
+            spatial_attn_blocks.append(AttentionBlock(spatial_attn_patchsize, hidden=ngf * mult * 2))
 
-        multi_blocks = []
-        for _ in range(multi_block_num):
-            multi_blocks.append(TransformerBlock(multi_patchsize, hidden=ngf * mult * 2))
+        temporal_attn_blocks = []
+        for _ in range(temporal_block_num):
+            temporal_attn_blocks.append(AttentionBlock(temporal_attn_patchsize, hidden=ngf * mult * 2))
         
         upsample_block = []
         mask_branch = [nn.ReLU(inplace=True)]
@@ -354,8 +354,8 @@ class Generator(BaseNetwork):
         self.weight_branch = nn.Sequential(*weight_branch)
         self.res_branch_1 = nn.Sequential(*res_block_1)
         self.res_branch_2 = nn.Sequential(*res_block_2)
-        self.single_transformer = nn.Sequential(*single_blocks)
-        self.multi_transformer = nn.Sequential(*multi_blocks)
+        self.spatial_attention = nn.Sequential(*spatial_attn_blocks)
+        self.temporal_attention = nn.Sequential(*temporal_attn_blocks)
         self.upsample_block = nn.Sequential(*upsample_block)
         self.mask_branch = nn.Sequential(*mask_branch)
         self.side_branch_1 = nn.Sequential(*side_branch_1)
@@ -368,76 +368,27 @@ class Generator(BaseNetwork):
         # The shape of x should be [B, T, C, H, W]
         b, t, c, h, w = x.shape
         x = x.view(b*t, c, h, w).contiguous()
-        rainy_main_feature = self.main_branch(x)
-        rainy_main_feature = self.res_branch_1(rainy_main_feature)
-        weight_feature = self.weight_branch(rainy_main_feature)
+        main_feature = self.main_branch(x)
+        main_feature = self.res_branch_1(main_feature)
+        ## Pixel Attention Block
+        weight_feature = self.weight_branch(main_feature)
         weight_map = self.sig_branch(weight_feature)
+        main_feature = main_feature * weight_map
         mask = self.mask_branch(weight_feature).view(b, t, 1, h, w)
-        main_feature = rainy_main_feature * weight_map
+        ## Spatial Attention Block
         _, c, sh, sw = main_feature.shape
-        single_main_feature = self.single_transformer({'x':main_feature, 'b':b*t, 'c':c})['x']
-        single_main_feature = self.res_branch_2(single_main_feature)
-        output_small_1 = self.side_branch_1(single_main_feature)
-        merge_main_feature = self.multi_transformer({'x':single_main_feature, 'b':b, 'c':c})['x']
-        merge_main_feature = self.upsample_block[0](merge_main_feature)
-        output_small_2 = self.side_branch_2(merge_main_feature)
-        output = self.upsample_block[1:](merge_main_feature)
+        main_feature = self.spatial_attention({'x':main_feature, 'b':b*t, 'c':c})['x']
+        main_feature = self.res_branch_2(main_feature)
+        output_small_1 = self.side_branch_1(main_feature)
+        ## Temporal Attention Block
+        main_feature = self.temporal_attention({'x':main_feature, 'b':b, 'c':c})['x']
+        main_feature = self.upsample_block[0](main_feature)
+        output_small_2 = self.side_branch_2(main_feature)
+        output = self.upsample_block[1:](main_feature)
         output = output.view(b, t, 3, h, w)
 
         return output_small_1, output_small_2, output, mask
 
-### from STTN
-# class Discriminator(BaseNetwork):
-#     def __init__(self, in_channels=3, use_sigmoid=True, use_spectral_norm=True, init_weights=True):
-#         super(Discriminator, self).__init__()
-#         self.use_sigmoid = use_sigmoid
-#         nf = 64
-
-#         self.conv = nn.Sequential(
-#             spectral_norm(nn.Conv3d(in_channels=in_channels, out_channels=nf*1, kernel_size=(3, 5, 5), stride=(1, 2, 2),
-#                                     padding=1, bias=not use_spectral_norm), use_spectral_norm),
-#             # nn.InstanceNorm2d(64, track_running_stats=False),
-#             nn.LeakyReLU(0.2, inplace=True),
-#             spectral_norm(nn.Conv3d(nf*1, nf*2, kernel_size=(3, 5, 5), stride=(1, 2, 2),
-#                                     padding=(1, 2, 2), bias=not use_spectral_norm), use_spectral_norm),
-#             # nn.InstanceNorm2d(128, track_running_stats=False),
-#             nn.LeakyReLU(0.2, inplace=True),
-#             spectral_norm(nn.Conv3d(nf * 2, nf * 4, kernel_size=(3, 5, 5), stride=(1, 2, 2),
-#                                     padding=(1, 2, 2), bias=not use_spectral_norm), use_spectral_norm),
-#             # nn.InstanceNorm2d(256, track_running_stats=False),
-#             nn.LeakyReLU(0.2, inplace=True),
-#             spectral_norm(nn.Conv3d(nf * 4, nf * 4, kernel_size=(3, 5, 5), stride=(1, 2, 2),
-#                                     padding=(1, 2, 2), bias=not use_spectral_norm), use_spectral_norm),
-#             # nn.InstanceNorm2d(256, track_running_stats=False),
-#             nn.LeakyReLU(0.2, inplace=True),
-#             spectral_norm(nn.Conv3d(nf * 4, nf * 4, kernel_size=(3, 5, 5), stride=(1, 2, 2),
-#                                     padding=(1, 2, 2), bias=not use_spectral_norm), use_spectral_norm),
-#             # nn.InstanceNorm2d(256, track_running_stats=False),
-#             nn.LeakyReLU(0.2, inplace=True),
-#             nn.Conv3d(nf * 4, nf * 4, kernel_size=(3, 5, 5),
-#                       stride=(1, 2, 2), padding=(1, 2, 2))
-#         )
-
-#         self.sig = nn.Sequential(nn.Sigmoid())
-
-#         self.init_weights()
-
-#     def forward(self, xs):
-#         #B, T, C, H, W = xs.shape
-#         xs_t = torch.transpose(xs, 1, 2)
-#         feat = self.conv(xs_t)
-#         if self.use_sigmoid:
-#             feat = self.sig(feat)
-#         out = torch.transpose(feat, 1, 2)  # B, T, C, H, W
-#         return out
-
-
-# def spectral_norm(module, mode=True):
-#     if mode:
-#         return _spectral_norm(module)
-#     return module
-
-### from Vid2Vid
 class MultiscaleDiscriminator(BaseNetwork):
     def __init__(self, input_nc, ndf=64, n_layers=3, norm_layer=nn.BatchNorm2d, 
                  num_D=3, getIntermFeat=False):

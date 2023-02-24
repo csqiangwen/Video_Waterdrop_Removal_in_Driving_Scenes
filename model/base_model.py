@@ -105,13 +105,7 @@ class BaseModel():
         save_filename = '%s_state_%s.pth' % (iter_label, network_label)
         save_path = os.path.join(self.save_dir, save_filename)
         states = torch.load(save_path, map_location='cpu')
-        net_state = {}
-        for key, value in states['network'].items():
-            if 'module.' in key:
-                net_state[key.replace('module.', '')] = value
-            else:
-                net_state[key] = value
-        network.load_state_dict(net_state)
+        network.load_state_dict(states)
 
     # update learning rate (called once every epoch)
     def update_learning_rate(self, iteration_step):

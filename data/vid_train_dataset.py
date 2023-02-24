@@ -9,9 +9,9 @@ from natsort import natsorted
 import glob
 
 ## Dataloader for RainDrop dataset
-class RainDropDataset(data.Dataset):
+class WaterDropDataset(data.Dataset):
     def __init__(self, opt):
-        super(RainDropDataset,self).__init__()
+        super(WaterDropDataset,self).__init__()
         self.opt = opt
         self.rainy_vid_path = os.path.join(self.opt.vid_dataroot, 'DREYE_new', 'train_quarter', 'rainy_vid')
         self.rainy_vid_names = natsorted(os.listdir(self.rainy_vid_path))

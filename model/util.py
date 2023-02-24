@@ -160,10 +160,7 @@ class FeedForward(nn.Module):
         return x
 
 
-class TransformerBlock(nn.Module):
-    """
-    Transformer = MultiHead_Attention + Feed_Forward with sublayer connection
-    """
+class AttentionBlock(nn.Module):
 
     def __init__(self, patchsize, hidden=128):
         super().__init__()

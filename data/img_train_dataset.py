@@ -13,13 +13,13 @@ class RainDropDataset(data.Dataset):
     def __init__(self, opt):
         super(RainDropDataset,self).__init__()
         self.opt = opt
-        self.rainy_img_path = os.path.join(self.opt.vid_dataroot, 'train', 'data')
+        self.rainy_img_path = os.path.join(self.opt.vid_dataroot, 'Raindrop', 'train', 'data')
         self.rainy_img_names = natsorted(os.listdir(self.rainy_img_path))
 
-        self.clean_img_path = os.path.join(self.opt.vid_dataroot, 'train', 'gt')
+        self.clean_img_path = os.path.join(self.opt.vid_dataroot, 'Raindrop', 'train', 'gt')
         self.clean_img_names = natsorted(os.listdir(self.clean_img_path))
 
-        self.mask_path = os.path.join(self.opt.vid_dataroot, 'train', 'mask')
+        self.mask_path = os.path.join(self.opt.vid_dataroot, 'Raindrop', 'train', 'mask')
         self.mask_names = natsorted(os.listdir(self.mask_path))
 
         self.transforms = transforms.Compose([transforms.ToTensor(),transforms.Normalize(0.5, 0.5)])

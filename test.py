@@ -1,7 +1,7 @@
 import time
 from options.test_options import TestOptions
 from data.custom_dataset_data_loader import CreateDataLoader
-from model.custom_model import RainDrop
+from model.custom_model import WaterDrop
 from model.eval_tools import eval_PSNR, eval_SSIM
 from util import util
 import os
@@ -18,10 +18,12 @@ torch.cuda.manual_seed_all(SEED)
 torch.backends.cudnn.deterministic = True
 
 opt = TestOptions().parse()
-vid_test_loader_syn, vid_test_loader_youtube = CreateDataLoader(opt)
+vid_test_loader_syn, vid_test_loader_real = CreateDataLoader(opt)
 
-model = RainDrop()
+model = WaterDrop()
 model.initialize(opt)
 
-# model.vid_test_syn(vid_test_loader_syn, int(opt.which_iter))
-model.vid_test_youtube(vid_test_loader_youtube, int(opt.which_iter))
+if opt.data_type == 'synthetic':
+    model.vid_test_syn(vid_test_loader_syn, int(opt.which_iter))
+elif opt.data_type == 'real':
+    model.vid_test_real(vid_test_loader_real, int(opt.which_iter))

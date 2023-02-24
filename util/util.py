@@ -5,12 +5,6 @@ import numpy as np
 import cv2
 import os
 
-
-inv_normalize = transforms.Normalize(
-   mean=[-0.485/0.229, -0.456/0.224, -0.406/0.225],
-   std=[1/0.229, 1/0.224, 1/0.225]
-)
-
 # Converts a Tensor into a Numpy array
 # |imtype|: the desired type of the converted numpy array
 def tensor2im(image_tensor, type='Image', imtype=np.uint8):
