@@ -2,7 +2,7 @@
 Project | [Paper](https://arxiv.org/pdf/2302.05916.pdf)
 <p align='center'>
 <img src='visualization/8.gif' width=300>
-<img src='visualization/8.gif' width=300>
+<img src='visualization/5.gif' width=300>
 </p>
 
 
