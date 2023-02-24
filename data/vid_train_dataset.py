@@ -13,13 +13,13 @@ class WaterDropDataset(data.Dataset):
     def __init__(self, opt):
         super(WaterDropDataset,self).__init__()
         self.opt = opt
-        self.rainy_vid_path = os.path.join(self.opt.vid_dataroot, 'DREYE_new', 'train_quarter', 'rainy_vid')
+        self.rainy_vid_path = os.path.join(self.opt.vid_dataroot, 'train_vid', 'rainy_vid')
         self.rainy_vid_names = natsorted(os.listdir(self.rainy_vid_path))
         
-        self.rainy_mask_path = os.path.join(self.opt.vid_dataroot, 'DREYE_new', 'train_quarter', 'rainy_mask')
+        self.rainy_mask_path = os.path.join(self.opt.vid_dataroot, 'train_vid', 'rainy_mask')
         self.rainy_mask_names = natsorted(os.listdir(self.rainy_mask_path))
 
-        self.clean_vid_path = os.path.join(self.opt.vid_dataroot, 'DREYE_new', 'train_quarter', 'clean_vid')
+        self.clean_vid_path = os.path.join(self.opt.vid_dataroot, 'train_vid', 'clean_vid')
         self.clean_vid_names = natsorted(os.listdir(self.clean_vid_path))
 
         self.transforms = transforms.Compose([transforms.ToTensor(),transforms.Normalize(0.5, 0.5)])
