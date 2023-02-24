@@ -13,7 +13,7 @@ conda env create -f environment.yaml
 An environment named "th" will be created.
 
 ## Training
-- Download the training dataset, and put it in ```dataset/```;
+- Download the [training dataset](), and put it in ```dataset/```;
 - To train a model:
 ```
 $ bash train.sh
