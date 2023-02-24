@@ -7,7 +7,7 @@ class TestOptions(BaseOptions):
         # Data option
         self.parser.add_argument('--phase', type=str, default='test', help='train, val, test, etc')
         self.parser.add_argument('--n_frames', type=int, default=10, help='the number of input frames')
-        self.parser.add_argument('--vid_dataroot', type=str, default='/disk1/wenqiang/Documents/data/Waterdrop/')
+        self.parser.add_argument('--vid_dataroot', type=str, default='./dataset/Waterdrop/')
         self.parser.add_argument('--data_type', type=str, default='real')
 
         # model option
