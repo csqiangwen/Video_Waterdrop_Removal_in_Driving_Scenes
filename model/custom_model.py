@@ -237,12 +237,10 @@ class WaterDrop(BaseModel):
     def get_current_errors(self, iteration):
         if iteration % 1000 >=0 and iteration % 1000 <100:
             ret_errors = OrderedDict([('whole_loss', self.whole_loss),
-                                    #   ('Loss_GAN', self.Loss_GAN),
                                       ('Loss_VGG', self.Loss_VGG),
                                       ('Loss_VGG_final', self.Loss_VGG_final),
                                       ('Loss_mask', self.Loss_mask),
                                       ('Loss_small', self.Loss_small),
-                                    #   ('DLoss', self.DLoss),
                                       ('PSNR', self.img_psnr)])
         else:
             ret_errors = OrderedDict([('whole_loss', self.whole_loss),
