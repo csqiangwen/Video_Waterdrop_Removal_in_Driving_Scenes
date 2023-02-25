@@ -11,7 +11,7 @@ This is the official PyTorch implementation. This works aims at removing various
 #### Video Waterdrop Removal via Spatio-Temporal Fusion in Driving Scenes
 Qiang Wen, [Yue Wu](https://yuewuhkust.github.io/), [Qifeng Chen](https://cqf.io/) <br />
 The Hong Kong University of Science and Technology <br />
-IEEE International Conference on Robotics and Automation (ICRA) 2023
+IEEE International Conference on Robotics and Automation (ICRA), 2023
 
 ## Requirements
 - Pytorch 1.9
