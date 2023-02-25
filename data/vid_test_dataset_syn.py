@@ -12,9 +12,9 @@ class WaterDropDataset(data.Dataset):
     def __init__(self, opt):
         super(WaterDropDataset,self).__init__()
         self.opt = opt
-        self.rainy_vid_path = os.path.join(self.opt.vid_dataroot, 'test', 'syn', 'rainy_vid')
+        self.rainy_vid_path = os.path.join(self.opt.vid_dataroot, 'syn', 'rainy_vid')
         self.rainy_vid_names = natsorted(os.listdir(self.rainy_vid_path))
-        self.clean_vid_path = os.path.join(self.opt.vid_dataroot, 'test', 'syn', 'clean_vid')
+        self.clean_vid_path = os.path.join(self.opt.vid_dataroot, 'syn', 'clean_vid')
         self.clean_vid_names = natsorted(os.listdir(self.clean_vid_path))
 
         self.transforms = transforms.Compose([transforms.ToTensor(),transforms.Normalize(0.5, 0.5)])
