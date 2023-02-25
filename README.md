@@ -1,4 +1,4 @@
-# [ICRA2023] Video Waterdrop Removal via Spatio-Temporal Fusion in Driving Scenes
+# Video Waterdrop Removal via Spatio-Temporal Fusion in Driving Scenes
 Project | [Paper](https://arxiv.org/pdf/2302.05916.pdf)
 <p align='center'>
 <img src='visualization/8.gif' width=300>
@@ -7,6 +7,11 @@ Project | [Paper](https://arxiv.org/pdf/2302.05916.pdf)
 
 
 This is the official PyTorch implementation of "Video Waterdrop Removal via Spatio-Temporal Fusion in Driving Scenes". This works aims at removing various types of waterdrops for driving cars on rainy days. We also provide a large-scale synthetic dataset for the video waterdrop removal task.
+
+#### Video Waterdrop Removal via Spatio-Temporal Fusion in Driving Scenes
+Qiang Wen, [Yue Wu](https://yuewuhkust.github.io/), [Qifeng Chen](https://cqf.io/) <br />
+The Hong Kong University of Science and Technology <br />
+IEEE International Conference on Robotics and Automation (ICRA) 2023
 
 ## Requirements
 - Pytorch 1.9
