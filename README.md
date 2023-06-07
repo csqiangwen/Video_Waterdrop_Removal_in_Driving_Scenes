@@ -24,7 +24,7 @@ conda env create -f environment.yaml
 An environment named "th" will be created.
 
 ## Training
-- Download the [training dataset](https://hkustconnect-my.sharepoint.com/:f:/g/personal/qwenab_connect_ust_hk/EkaXnD0dkclCvZVk_jqk-IcBGauk7HE-4ZWARfghMiQcPg?e=SuPWoF), and put it in ```dataset/```;
+- Download the [training dataset](https://hkustconnect-my.sharepoint.com/:f:/g/personal/qwenab_connect_ust_hk/EoMvMSuXhLdOriy4SrtYPBoB-nHH53Q67UzRmUH3zOvgEg?e=KXRRQ5), and put it in ```dataset/```;
 - To train a model:
 ```
 $ bash train.sh
