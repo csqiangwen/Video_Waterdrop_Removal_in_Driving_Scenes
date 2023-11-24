@@ -45,7 +45,7 @@ If you find this repository useful for your research, please cite the following 
 @inproceedings{wen2023video,
   title={Video Waterdrop Removal via Spatio-Temporal Fusion in Driving Scenes},
   author={Wen, Qiang and Wu, Yue and Chen, Qifeng},
-  booktitle={2023 International Conference on Robotics and Automation (ICRA)},
+  booktitle={International Conference on Robotics and Automation (ICRA)},
   year={2023},
   organization={IEEE}
 }
