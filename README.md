@@ -50,3 +50,6 @@ If you find this repository useful for your research, please cite the following 
   organization={IEEE}
 }
 ```
+<p align='center'>
+<img src='visualization/HKUST_VIL.png' width=500>
+</p>
