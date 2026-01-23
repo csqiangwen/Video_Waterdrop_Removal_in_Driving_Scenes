@@ -24,7 +24,7 @@ conda env create -f environment.yaml
 An environment named "th" will be created.
 
 ## Training
-- Download the [training dataset](https://hkustconnect-my.sharepoint.com/:f:/g/personal/qwenab_connect_ust_hk/EoMvMSuXhLdOriy4SrtYPBoB-nHH53Q67UzRmUH3zOvgEg?e=KXRRQ5), and put it in ```dataset/```;
+- Download the [training dataset](https://huggingface.co/datasets/WayneWenOfficial/ICRA2023/resolve/main/dataset/train.zip), and put it in ```dataset/```;
 - To train a model:
 ```
 $ bash train.sh
@@ -32,7 +32,7 @@ $ bash train.sh
 You can also use the command ```tensorboard --logdir=runs``` to visually check the training results.
 ## Testing
 - Download the [pretrained model](https://drive.google.com/drive/folders/1c3JYdv64U-OmOyksNK6n51sNwBgy-iQC?usp=sharing), and put it in ```checkpoints_waterdrop/```;
-- Download the [test dataset](https://hkustconnect-my.sharepoint.com/:u:/g/personal/qwenab_connect_ust_hk/ESVlboaVRvtLk1xth__yb6QB7t3CSBMaN9G_-SJNKVG8MQ?e=4L45pS), and unzip it in ```dataset/```;
+- Download the [test dataset](https://huggingface.co/datasets/WayneWenOfficial/ICRA2023/resolve/main/dataset/test.zip), and unzip it in ```dataset/```;
 - To test:
 ```
 $ bash test.sh
